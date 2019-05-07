@@ -15,6 +15,10 @@ class MyDocument extends Document {
             href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900"
+            rel="stylesheet"
+          />
         </Head>
         <body className="custom_class">
           <Main />
