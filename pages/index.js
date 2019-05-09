@@ -12,10 +12,11 @@ import {
 import Form from "../components/Form";
 import History from "../components/History";
 import { data } from "../data/data";
+import { formatMoney, getLocalDate } from "../utils/functions";
 import "../styles/styles.scss";
 
 class index extends Component {
-  state = {};
+  state = { data: data, date: getLocalDate() };
 
   toggleModal = () => {
     const { showModal } = this.state;
@@ -23,14 +24,28 @@ class index extends Component {
     this.setState({ showModal: !showModal });
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
+  handleSubmit = e => {
+    const { date, store, amount } = this.state;
+    e.preventDefault();
+    this.setState({
+      data: [
+        ...this.state.data,
+        {
+          date,
+          store,
+          amount: formatMoney(amount)
+        }
+      ]
+    });
     this.toggleModal();
   };
 
   render() {
-    const { showModal } = this.state;
+    const { showModal, data } = this.state;
 
     const history = {};
     const historyArry = [];
@@ -64,8 +79,11 @@ class index extends Component {
     }
 
     return (
-      <div className="roboto border p2" style={{ background: "#f6f6f6" }}>
-        <div className="border-divider bg-white rounded pt2 pb1 mb2">
+      <div className="roboto" style={{ background: "#f6f6f6" }}>
+        <div className="bg-white border-bottom gray p2">
+          <h3 className="lighter m0">Login</h3>
+        </div>
+        <div className="border-divider bg-white rounded m2 pt2 pb1">
           <LineChart
             width={330}
             height={200}
@@ -93,6 +111,7 @@ class index extends Component {
         <Form
           showModal={showModal}
           toggleModal={this.toggleModal}
+          handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
         <History data={data} />
