@@ -31,17 +31,19 @@ class index extends Component {
   handleSubmit = e => {
     const { date, store, amount } = this.state;
     e.preventDefault();
-    this.setState({
-      data: [
-        ...this.state.data,
-        {
-          date,
-          store,
-          amount: formatMoney(amount)
-        }
-      ]
-    });
-    this.toggleModal();
+    if (date && store && amount) {
+      this.setState({
+        data: [
+          ...this.state.data,
+          {
+            date,
+            store,
+            amount: formatMoney(amount)
+          }
+        ]
+      });
+      this.toggleModal();
+    }
   };
 
   render() {
