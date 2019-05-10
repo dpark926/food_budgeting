@@ -61,13 +61,11 @@ class index extends Component {
 
   render() {
     const { showModal, data, date, openMonths } = this.state;
-
     const history = {};
     const historyArry = [];
 
     for (let i = 0; i < data.length; i++) {
-      const month = new Date(data[i].date).getMonth();
-
+      const month = parseInt(data[i].date.slice(6, 8));
       if (history[months[month]]) {
         history[months[month]] += data[i].amount;
       } else {
