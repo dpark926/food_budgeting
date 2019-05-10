@@ -32,6 +32,7 @@ class index extends Component {
   handleSubmit = e => {
     const { date, store, amount } = this.state;
     e.preventDefault();
+
     if (date && store && amount) {
       this.setState({
         data: [
