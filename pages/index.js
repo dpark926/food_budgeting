@@ -66,16 +66,18 @@ class index extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const month = parseInt(data[i].date.slice(6, 8));
-      if (history[months[month]]) {
-        history[months[month]] += data[i].amount;
+      if (history[months[month - 1]]) {
+        history[months[month - 1]] += data[i].amount;
       } else {
-        history[months[month]] = data[i].amount;
+        history[months[month - 1]] = data[i].amount;
       }
     }
 
     for (let key in history) {
       historyArry.push({ month: key, total: formatMoney(history[key]) });
     }
+
+    console.log(historyArry);
 
     return (
       <div className="roboto" style={{ background: "#f6f6f6" }}>
