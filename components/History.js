@@ -1,25 +1,15 @@
+import { formatMoney, sortByDate } from "../utils/functions";
+import { months } from "../utils/variables";
+
 const History = props => {
   const { data } = props;
+  const sortedData = sortByDate(data);
   const history = {};
-  const months = [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "may",
-    "jun",
-    "jul",
-    "aug",
-    "aug",
-    "sep",
-    "nov",
-    "dec"
-  ];
 
-  for (let i = 0; i < data.length; i++) {
-    const d = new Date(data[i].date);
-    const month = d.getMonth();
-    const year = d.getYear();
+  for (let i = sortedData.length - 1; i >= 0; i--) {
+    const d = sortedData[i].date;
+    const month = parseInt(d.slice(5, 7));
+    const year = d.slice(0, 4);
 
     if (history[`${month}/${year}`]) {
       history[`${month}/${year}`].total += data[i].amount;
@@ -48,14 +38,14 @@ const History = props => {
             >
               <div className="flex white pt1 normal">
                 <p className="col-3 h5 pb1 m0">
-                  {months[history[month].month].toUpperCase()}
+                  {months[history[month].month - 1].toUpperCase()}
                 </p>
                 <div className="flex col-9">
                   <p className="col-9 flex-auto h5 pb1 m0 right-align">
                     TOTAL:
                   </p>
                   <p className="col-3 right-align h5 pb1 m0">
-                    ${history[month].total}
+                    ${formatMoney(history[month].total)}
                   </p>
                 </div>
               </div>
@@ -67,11 +57,14 @@ const History = props => {
                   key={obj.date + obj.store + idx}
                 >
                   <div className="flex black pt1">
-                    <p className="col-3 h5 pb1 m0">{obj.date}</p>
+                    <p className="col-3 h5 pb1 m0">{`${obj.date.slice(
+                      5,
+                      7
+                    )}/${obj.date.slice(8)}`}</p>
                     <div className="flex col-9">
-                      <p className="h5 pb1 m0">{obj.store}</p>
+                      <p className="h5 pb1 m0 capitalize">{obj.store}</p>
                       <p className="flex-auto right-align h5 pb1 m0">
-                        ${obj.amount}
+                        ${formatMoney(obj.amount)}
                       </p>
                     </div>
                   </div>

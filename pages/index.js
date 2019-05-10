@@ -13,6 +13,7 @@ import Form from "../components/Form";
 import History from "../components/History";
 import { data } from "../data/data";
 import { formatMoney, getLocalDate } from "../utils/functions";
+import { months } from "../utils/variables";
 import "../styles/styles.scss";
 
 class index extends Component {
@@ -38,7 +39,7 @@ class index extends Component {
           {
             date,
             store,
-            amount: formatMoney(amount)
+            amount: parseInt(amount)
           }
         ]
       });
@@ -47,24 +48,10 @@ class index extends Component {
   };
 
   render() {
-    const { showModal, data } = this.state;
+    const { showModal, data, date } = this.state;
 
     const history = {};
     const historyArry = [];
-    const months = [
-      "jan",
-      "feb",
-      "mar",
-      "apr",
-      "may",
-      "jun",
-      "jul",
-      "aug",
-      "aug",
-      "sep",
-      "nov",
-      "dec"
-    ];
 
     for (let i = 0; i < data.length; i++) {
       const month = new Date(data[i].date).getMonth();
@@ -77,7 +64,7 @@ class index extends Component {
     }
 
     for (let key in history) {
-      historyArry.push({ month: key, total: history[key] });
+      historyArry.push({ month: key, total: formatMoney(history[key]) });
     }
 
     return (
@@ -111,6 +98,7 @@ class index extends Component {
           </LineChart>
         </div>
         <Form
+          date={date}
           showModal={showModal}
           toggleModal={this.toggleModal}
           handleChange={this.handleChange}

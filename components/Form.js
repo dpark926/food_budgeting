@@ -1,7 +1,7 @@
 import { getLocalDate } from "../utils/functions";
 
 const Form = props => {
-  const { toggleModal, showModal, handleSubmit, handleChange } = props;
+  const { toggleModal, showModal, handleSubmit, handleChange, date } = props;
 
   return (
     <div>
@@ -24,7 +24,7 @@ const Form = props => {
             <input
               type="date"
               name="date"
-              value={getLocalDate()}
+              value={date}
               className="border-divider rounded p1 mb1 h5"
               onChange={handleChange}
             />

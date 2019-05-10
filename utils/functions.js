@@ -14,7 +14,15 @@ export const changePercent = (current, prev) => {
 };
 
 export const getLocalDate = () => {
-  var local = new Date();
-  local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+  const local = new Date();
+  // local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
   return local.toJSON().slice(0, 10);
+};
+
+export const sortByDate = array => {
+  const dup = array.slice();
+  dup.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+  return dup;
 };
