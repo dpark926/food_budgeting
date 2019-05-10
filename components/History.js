@@ -2,7 +2,7 @@ import { formatMoney, sortByDate } from "../utils/functions";
 import { months } from "../utils/variables";
 
 const History = props => {
-  const { data } = props;
+  const { data, toggleAccordion, openMonths } = props;
   const sortedData = sortByDate(data);
   const history = {};
 
@@ -35,6 +35,7 @@ const History = props => {
             <div
               className={`border-bottom rounded box-shadow light-gray bg-blue px2 `}
               key={month + idx}
+              onClick={() => toggleAccordion(idx)}
             >
               <div className="flex white pt1 normal">
                 <p className="col-3 h5 pb1 m0">
@@ -50,27 +51,28 @@ const History = props => {
                 </div>
               </div>
             </div>
-            {history[month].list.map((obj, key) => {
-              return (
-                <div
-                  className="border-top light-gray mx2"
-                  key={obj.date + obj.store + idx}
-                >
-                  <div className="flex black pt1">
-                    <p className="col-3 h5 pb1 m0">{`${obj.date.slice(
-                      5,
-                      7
-                    )}/${obj.date.slice(8)}`}</p>
-                    <div className="flex col-9">
-                      <p className="h5 pb1 m0 capitalize">{obj.store}</p>
-                      <p className="flex-auto right-align h5 pb1 m0">
-                        ${formatMoney(obj.amount)}
-                      </p>
+            {openMonths.includes(idx) &&
+              history[month].list.map((obj, key) => {
+                return (
+                  <div
+                    className="border-top light-gray mx2"
+                    key={obj.date + obj.store + idx}
+                  >
+                    <div className="flex black pt1">
+                      <p className="col-3 h5 pb1 m0">{`${obj.date.slice(
+                        5,
+                        7
+                      )}/${obj.date.slice(8)}`}</p>
+                      <div className="flex col-9">
+                        <p className="h5 pb1 m0 capitalize">{obj.store}</p>
+                        <p className="flex-auto right-align h5 pb1 m0">
+                          ${formatMoney(obj.amount)}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         );
       })}

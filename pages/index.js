@@ -17,7 +17,7 @@ import { months } from "../utils/variables";
 import "../styles/styles.scss";
 
 class index extends Component {
-  state = { data: data, date: getLocalDate() };
+  state = { data: data, date: getLocalDate(), openMonths: [0] };
 
   toggleModal = () => {
     const { showModal } = this.state;
@@ -47,8 +47,20 @@ class index extends Component {
     }
   };
 
+  toggleAccordion = idx => {
+    const { openMonths } = this.state;
+    if (openMonths.includes(idx)) {
+      const filtered = openMonths.filter(num => {
+        return num !== idx;
+      });
+      this.setState({ openMonths: filtered });
+    } else {
+      this.setState({ openMonths: [...openMonths, idx] });
+    }
+  };
+
   render() {
-    const { showModal, data, date } = this.state;
+    const { showModal, data, date, openMonths } = this.state;
 
     const history = {};
     const historyArry = [];
@@ -104,7 +116,11 @@ class index extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-        <History data={data} />
+        <History
+          data={data}
+          toggleAccordion={this.toggleAccordion}
+          openMonths={openMonths}
+        />
       </div>
     );
   }
