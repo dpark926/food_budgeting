@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import axios from "axios";
 import {
   LineChart,
   Line,
@@ -11,13 +12,24 @@ import {
 } from "recharts";
 import Form from "../components/Form";
 import History from "../components/History";
-import { data } from "../data/data";
 import { formatMoney, getLocalDate } from "../utils/functions";
 import { months } from "../utils/variables";
+import { keys } from "../config/keys";
 import "../styles/styles.scss";
 
 class index extends Component {
-  state = { data: data, date: getLocalDate(), openMonths: [0] };
+  state = { date: getLocalDate(), openMonths: [0] };
+
+  componentDidMount() {
+    fetch(keys.db + "/transactions")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          data: data
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   toggleModal = () => {
     const { showModal } = this.state;
@@ -32,18 +44,15 @@ class index extends Component {
   handleSubmit = e => {
     const { date, store, amount } = this.state;
     e.preventDefault();
-
     if (date && store && amount) {
-      this.setState({
-        data: [
-          ...this.state.data,
-          {
-            date,
-            store,
-            amount: parseInt(amount)
-          }
-        ]
-      });
+      axios
+        .post(keys.db + "/transactions", {
+          date,
+          store,
+          amount
+        })
+        .then(res => this.setState({ data: [...this.state.data, res.data] }));
+
       this.toggleModal();
     }
   };
@@ -61,24 +70,22 @@ class index extends Component {
   };
 
   render() {
-    const { showModal, data, date, openMonths } = this.state;
+    const { showModal, data = [], date, openMonths } = this.state;
     const history = {};
     const historyArry = [];
 
     for (let i = 0; i < data.length; i++) {
       const month = parseInt(data[i].date.slice(6, 8));
       if (history[months[month - 1]]) {
-        history[months[month - 1]] += data[i].amount;
+        history[months[month - 1]] += parseFloat(data[i].amount);
       } else {
-        history[months[month - 1]] = data[i].amount;
+        history[months[month - 1]] = parseFloat(data[i].amount);
       }
     }
 
     for (let key in history) {
       historyArry.push({ month: key, total: formatMoney(history[key]) });
     }
-
-    console.log(historyArry);
 
     return (
       <div className="roboto" style={{ background: "#f6f6f6" }}>

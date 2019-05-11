@@ -17,8 +17,8 @@ router.get("/", (req, res) => {
 // @desc    Create an transaction
 // @access  Public
 router.post("/", (req, res) => {
-  console.log(req);
   const newTransaction = new Transaction({
+    date: req.body.date,
     store: req.body.store,
     amount: req.body.amount
   });

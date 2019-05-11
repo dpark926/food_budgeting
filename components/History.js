@@ -12,13 +12,13 @@ const History = props => {
     const year = d.slice(0, 4);
 
     if (history[`${month}/${year}`]) {
-      history[`${month}/${year}`].total += data[i].amount;
+      history[`${month}/${year}`].total += parseFloat(data[i].amount);
       history[`${month}/${year}`].list.push(data[i]);
     } else {
       history[`${month}/${year}`] = {
         month,
         year,
-        total: data[i].amount,
+        total: parseFloat(data[i].amount),
         list: [data[i]]
       };
     }
