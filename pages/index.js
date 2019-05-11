@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import Form from "../components/Form";
 import History from "../components/History";
-import { formatMoney, getLocalDate } from "../utils/functions";
+import { formatMoney, getLocalDate, sortByDate } from "../utils/functions";
 import { months } from "../utils/variables";
 import { keys } from "../config/keys";
 import "../styles/styles.scss";
@@ -44,6 +44,7 @@ class index extends Component {
   handleSubmit = e => {
     const { date, store, amount } = this.state;
     e.preventDefault();
+    console.log(date);
     if (date && store && amount) {
       axios
         .post(keys.db + "/transactions", {
@@ -51,7 +52,9 @@ class index extends Component {
           store,
           amount
         })
-        .then(res => this.setState({ data: [...this.state.data, res.data] }));
+        .then(res =>
+          this.setState({ data: sortByDate([...this.state.data, res.data]) })
+        );
 
       this.toggleModal();
     }

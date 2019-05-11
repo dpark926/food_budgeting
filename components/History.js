@@ -30,7 +30,7 @@ const History = props => {
         return (
           <div
             className={`border-divider rounded bg-white ${idx !== 0 && "mt1"}`}
-            key={idx}
+            key={month + idx}
           >
             <div
               className={`border-bottom rounded box-shadow light-gray bg-blue px2 `}
@@ -39,7 +39,9 @@ const History = props => {
             >
               <div className="flex white pt1 normal">
                 <p className="col-3 h5 pb1 m0">
-                  {months[history[month].month - 1].toUpperCase()}
+                  {`${months[
+                    history[month].month - 1
+                  ].toUpperCase()} '${month.slice(4)}`}
                 </p>
                 <div className="flex col-9">
                   <p className="col-9 flex-auto h5 pb1 m0 right-align">
