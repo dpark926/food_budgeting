@@ -1,7 +1,8 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const next = require("next");
 var cors = require("cors");
-require("dotenv").config();
 const bodyParser = require("body-parser");
 const transactions = require("./routes/api/transactions");
 const PORT = process.env.PORT || 3005;
