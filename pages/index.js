@@ -21,8 +21,7 @@ class index extends Component {
   state = { date: getLocalDate(), openMonths: [0] };
 
   componentDidMount() {
-    console.log(process.env.db);
-    fetch(keys.db)
+    fetch(keys.db, { mode: "cors" })
       .then(response => response.json())
       .then(data => {
         this.setState({
