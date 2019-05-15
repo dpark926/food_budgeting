@@ -21,6 +21,8 @@ class index extends Component {
   state = { date: getLocalDate(), openMonths: [0] };
 
   componentDidMount() {
+    console.log(process.env.PORT);
+    console.log(process.env.NODE_ENV);
     fetch(keys.db)
       .then(response => response.json())
       .then(data => {
