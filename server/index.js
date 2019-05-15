@@ -4,7 +4,7 @@ const next = require("next");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const transactions = require("./routes/api/transactions");
-const PORT = parseInt(process.env.PORT, 10) || 3005;
+const PORT = process.env.PORT || 3005;
 const dev = process.env.NODE_DEV !== "production"; //true false
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler(); //part of next config

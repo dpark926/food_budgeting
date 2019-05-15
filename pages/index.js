@@ -23,6 +23,8 @@ class index extends Component {
   componentDidMount() {
     console.log(process.env.PORT);
     console.log(process.env.NODE_ENV);
+    console.log(process.env.db);
+    console.log(keys.db);
     fetch(keys.db)
       .then(response => response.json())
       .then(data => {
