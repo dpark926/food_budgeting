@@ -25,7 +25,7 @@ class index extends Component {
     console.log(process.env.NODE_ENV);
     console.log(process.env.db);
     console.log(keys.db);
-    fetch(keys.db)
+    fetch("/api/transactions")
       .then(response => response.json())
       .then(data => {
         this.setState({
@@ -51,7 +51,7 @@ class index extends Component {
     console.log(date);
     if (date && store && amount) {
       axios
-        .post(keys.db + "/transactions", {
+        .post(keys.db, {
           date,
           store,
           amount
