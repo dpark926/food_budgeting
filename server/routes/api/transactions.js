@@ -8,9 +8,10 @@ const Transaction = require("../../models/Transaction");
 // @desc    Get all transaction
 // @access  Public
 router.get("/", (req, res) => {
-  Transaction.find()
-    .sort({ date: 1 })
-    .then(transactions => res.json(transactions));
+  // Transaction.find()
+  //   .sort({ date: 1 })
+  //   .then(transactions => res.json(transactions));
+  return res.end("We made it!");
 });
 
 // @route   POST api/transaction
