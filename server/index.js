@@ -24,16 +24,22 @@ nextApp
     app.use(cors());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
-      next();
-    });
+    // app.use(function(req, res, next) {
+    //   res.header("Access-Control-Allow-Origin", "*");
+    //   res.header(
+    //     "Access-Control-Allow-Headers",
+    //     "Origin, X-Requested-With, Content-Type, Accept"
+    //   );
+    //   next();
+    // });
 
-    app.use("/api/transactions", transactions);
+    // app.use("/api/transactions", transactions);
+    app.use("/api/transactions", (req, res) => {
+      // Transaction.find()
+      //   .sort({ date: 1 })
+      //   .then(transactions => res.json(transactions));
+      return res.end("We made it!");
+    });
     app.get("*", (req, res) => {
       return handle(req, res); // for all the react stuff
     });
